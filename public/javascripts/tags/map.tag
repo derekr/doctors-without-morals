@@ -39,7 +39,14 @@
 
         self.map.eachLayer(function (layer) {
             layer.on('click', function (e) {
-                riotControl.trigger('doctorInit', self.doctors[1]);
+                for (var i = 0; i < self.doctors.length; i++) {
+                    var dr = self.doctors[i];
+                    if (dr.profileNumber == e.layer.options.title)
+                    {
+                        riotControl.trigger('doctorInit', dr);
+                        break;
+                    }
+                }
             });
         })
     });
