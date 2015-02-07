@@ -743,18 +743,21 @@ var riotControl = require('./lib/riot-control');
 
 var doctorsList = require('./stores/doctors')();
 var doctor = require('./stores/doctor')();
+var map = require('./stores/map')();
 
 riotControl.addStore(doctorsList);
 riotControl.addStore(doctor);
+riotControl.addStore(map); // keeps track of tab bar filter
 
 require('./tags/app.tag');
 require('./tags/splash.tag');
 require('./tags/map.tag');
+require('./tags/tab-bar.tag');
 require('./tags/doctor.tag');
 
 riot.mount('dwm-app');
 
-},{"./lib/riot-control":2,"./stores/doctor":4,"./stores/doctors":5,"./tags/app.tag":6,"./tags/doctor.tag":7,"./tags/map.tag":8,"./tags/splash.tag":9,"riot":1}],4:[function(require,module,exports){
+},{"./lib/riot-control":2,"./stores/doctor":4,"./stores/doctors":5,"./stores/map":6,"./tags/app.tag":7,"./tags/doctor.tag":8,"./tags/map.tag":9,"./tags/splash.tag":10,"./tags/tab-bar.tag":11,"riot":1}],4:[function(require,module,exports){
 var riot = require('riot');
 
 module.exports = Doctor;
@@ -808,7 +811,27 @@ function Doctors () {
 
 },{"riot":1}],6:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-doctor></dwm-doctor>', function(opts) {
+
+module.exports = Map;
+
+function Map () {
+    if (!(this instanceof Map)) return new Map();
+
+    riot.observable(this);
+
+    var self = this;
+
+    self.filter = null;
+
+    self.on('filterMap', function (filter) {
+        self.filter = filter;
+        self.trigger('mapFilterChanged', self.filter);
+    });
+};
+
+},{"riot":1}],7:[function(require,module,exports){
+var riot = require('riot');
+riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-tab-bar></dwm-tab-bar> <dwm-doctor></dwm-doctor>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
@@ -824,7 +847,7 @@ riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-doctor><
 
 });
 
-},{"../lib/riot-control":2,"riot":1}],7:[function(require,module,exports){
+},{"../lib/riot-control":2,"riot":1}],8:[function(require,module,exports){
 var riot = require('riot');
 riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> <div class="modal-header" style="background-image: url({ doctor.cover })"> <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div> </div> <div class="modal-body"> <ul> <li>Name: { doctor.name }</li> <li>Drugs: { doctor.drugs }</li> <li>Rating: { doctor.rating }</li> </ul> <div class="modal-highlight"> { doctor.instructions } </div> </div> </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
 
@@ -866,7 +889,7 @@ riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <d
 
 });
 
-},{"../lib/riot-control":2,"riot":1}],8:[function(require,module,exports){
+},{"../lib/riot-control":2,"riot":1}],9:[function(require,module,exports){
 var riot = require('riot');
 riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id="map-container"></div> </div>', function(opts) {
 
@@ -885,6 +908,10 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
         self.isHidden = false;
         self.doctors = doctors;
         self.update();
+    });
+
+    riotControl.on('mapFilterChanged', function (filter) {
+        console.log(filter);
     });
 
     self.on('mount', function () {
@@ -909,7 +936,7 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
 
 });
 
-},{"../lib/riot-control":2,"riot":1}],9:[function(require,module,exports){
+},{"../lib/riot-control":2,"riot":1}],10:[function(require,module,exports){
 var riot = require('riot');
 riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h1>Doctors Without Morals</h1> <p> this will stay up for 2 seconds and then the map view will load. </p> </div>', function(opts) {
 
@@ -924,6 +951,28 @@ riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h
         self.isHidden = true;
         self.update();
     });
+
+});
+
+},{"../lib/riot-control":2,"riot":1}],11:[function(require,module,exports){
+var riot = require('riot');
+riot.tag('dwm-tab-bar', '<div class="tab-bar-view { \'is-hidden\': isHidden }"> <div class="tab-nav"> <div data-filter="herb" onclick="{ tab }"> 🌿 </div> <div data-filter="pills" onclick="{ tab }"> 💊 </div> <div data-filter="lucky" onclick="{ tab }"> 🚀 </div> <div data-filter="desperate" onclick="{ tab }"> 🔪 </div> </div> </div>', function(opts) {
+
+    var riotControl = require('../lib/riot-control');
+
+    var self = this;
+
+    self.isHidden = true;
+
+    riotControl.on('doctorsListChanged', function () {
+        self.isHidden = false;
+        self.update();
+    });
+
+    this.tab = function(e) {
+        var target = e.target;
+        riotControl.trigger('filterMap', target.dataset.filter);
+    }.bind(this);
 
 });
 

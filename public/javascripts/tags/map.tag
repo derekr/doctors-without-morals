@@ -20,6 +20,10 @@
         self.update();
     });
 
+    riotControl.on('mapFilterChanged', function (filter) {
+        console.log(filter);
+    });
+
     self.on('mount', function () {
         self.map = L.mapbox.map(self['map-container'], MAPBOX_ID, {
             accessToken: MAPBOX_ACCESS_TOKEN
