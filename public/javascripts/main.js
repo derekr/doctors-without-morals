@@ -1,3 +1,5 @@
+Parse.initialize("u5GYkgHb3xvWHgEclLEq9Vsa4DzbcQyhuHzSy4KT", "cV86IvpB4YVDDl0vZjTwScFoH3bpYKq0B8uXJcat");
+
 var riot = require('riot');
 var riotControl = require('./lib/riot-control');
 
@@ -16,3 +18,5 @@ require('./tags/tab-bar.tag');
 require('./tags/doctor.tag');
 
 riot.mount('dwm-app');
+
+

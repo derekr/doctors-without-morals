@@ -38,8 +38,8 @@
         });
 
         self.map.eachLayer(function (layer) {
-            layer.on('click', function () {
-                riotControl.trigger('doctorInit', {});
+            layer.on('click', function (e) {
+                riotControl.trigger('doctorInit', self.doctors[1]);
             });
         })
     });

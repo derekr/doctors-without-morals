@@ -738,6 +738,8 @@ module.exports = {
 }
 
 },{}],3:[function(require,module,exports){
+Parse.initialize("u5GYkgHb3xvWHgEclLEq9Vsa4DzbcQyhuHzSy4KT", "cV86IvpB4YVDDl0vZjTwScFoH3bpYKq0B8uXJcat");
+
 var riot = require('riot');
 var riotControl = require('./lib/riot-control');
 
@@ -757,6 +759,8 @@ require('./tags/doctor.tag');
 
 riot.mount('dwm-app');
 
+
+
 },{"./lib/riot-control":2,"./stores/doctor":4,"./stores/doctors":5,"./stores/map":6,"./tags/app.tag":7,"./tags/doctor.tag":8,"./tags/map.tag":9,"./tags/splash.tag":10,"./tags/tab-bar.tag":11,"riot":1}],4:[function(require,module,exports){
 var riot = require('riot');
 
@@ -771,16 +775,9 @@ function Doctor () {
 
     self.doctor = null;
 
-    self.on('doctorInit', function (id) {
-        self.doctor = {
-            name: 'Leo Spaceman',
-            rating: 3,
-            drugs: 'weed, vicodin',
-            instructions: 'Tell Dr Spaceman you have a constant pressure behind your right eye.',
-            avatar: 'https://pbs.twimg.com/profile_images/1008791271/leospaceman_400x400.jpg',
-            cover: 'http://distancecities.com/wp-content/uploads/2014/11/new_york_hop.jpg'
-        };
-        console.log('init doctor');
+    self.on('doctorInit', function (dr) {
+        self.doctor = dr;
+        console.log('init doctor, dr: ' + JSON.stringify(dr));
         self.trigger('doctorChanged', self.doctor);
     });
 
@@ -801,10 +798,35 @@ function Doctors () {
     riot.observable(this);
 
     var self = this;
-
-    self.doctors = [{ name: 'doc1' }, { name: 'doc2' }];
+    self.doctors = [];
 
     self.on('doctorsListInit', function() {
+        var Doctor = Parse.Object.extend("doctor");
+        var dr = new Doctor();
+        var query = new Parse.Query(Doctor);
+        query.find({
+            success: function(results) {
+                console.log('loaded doctors');
+                for (var i = 0; i < results.length; i++) {
+                    var dr = results[i];
+                    console.log(dr.id + ' - ' + dr.get('name'));
+                    self.doctors.push({
+                        objectId: dr.get('objectId'),
+                        name: dr.get('name'),
+                        rating: dr.get('rating'),
+                        drugs: dr.get('drugs'),
+                        instructions: dr.get('instructions'),
+                        avatar: dr.get('avatar'),
+                        cover: dr.get('cover')
+                    });
+                }
+                self.trigger('doctorsListChanged', self.doctors);
+            },
+            error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+
         self.trigger('doctorsListChanged', self.doctors);
     });
 };
@@ -928,8 +950,8 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
         });
 
         self.map.eachLayer(function (layer) {
-            layer.on('click', function () {
-                riotControl.trigger('doctorInit', {});
+            layer.on('click', function (e) {
+                riotControl.trigger('doctorInit', self.doctors[1]);
             });
         })
     });
