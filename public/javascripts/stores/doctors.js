@@ -27,7 +27,12 @@ function Doctors () {
                         drugs: dr.get('drugs'),
                         instructions: dr.get('instructions'),
                         avatar: dr.get('avatar'),
-                        cover: dr.get('cover')
+                        cover: dr.get('cover'),
+                        comment1: dr.get('Comment_1'),
+                        comment2: dr.get('Comment_2'),
+                        comment3: dr.get('Comment_3'),
+                        profileNumber: dr.get('Profile_Number')
+                        incarcerated: dr.get('Incarcerated')
                     });
                 }
                 self.trigger('doctorsListChanged', self.doctors);
