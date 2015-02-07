@@ -777,7 +777,6 @@ function Doctor () {
 
     self.on('doctorInit', function (dr) {
         self.doctor = dr;
-        console.log('init doctor, dr: ' + JSON.stringify(dr));
         self.trigger('doctorChanged', self.doctor);
     });
 
@@ -806,10 +805,8 @@ function Doctors () {
         var query = new Parse.Query(Doctor);
         query.find({
             success: function(results) {
-                console.log('loaded doctors');
                 for (var i = 0; i < results.length; i++) {
                     var dr = results[i];
-                    console.log(dr.id + ' - ' + dr.get('name'));
                     self.doctors.push({
                         objectId: dr.get('objectId'),
                         name: dr.get('name'),
@@ -941,6 +938,11 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
     riotControl.on('doctorsListChanged', function (doctors) {
         self.isHidden = false;
         self.doctors = doctors;
+
+
+
+
+
         self.update();
     });
 
@@ -963,7 +965,17 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
 
         self.map.eachLayer(function (layer) {
             layer.on('click', function (e) {
-                riotControl.trigger('doctorInit', self.doctors[1]);
+                e.layer.closePopup();
+
+                var id = e.layer.feature.properties.title;
+
+                var doctor = self.doctors.filter(function (d) {
+                    return d.profileNumber === id;
+                })[0];
+
+                if (typeof doctor === 'undefined') return;
+
+                riotControl.trigger('doctorInit', doctor);
             });
         })
     });

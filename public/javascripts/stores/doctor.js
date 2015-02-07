@@ -13,7 +13,6 @@ function Doctor () {
 
     self.on('doctorInit', function (dr) {
         self.doctor = dr;
-        console.log('init doctor, dr: ' + JSON.stringify(dr));
         self.trigger('doctorChanged', self.doctor);
     });
 
