@@ -31,7 +31,7 @@ function Doctors () {
                         comment1: dr.get('Comment_1'),
                         comment2: dr.get('Comment_2'),
                         comment3: dr.get('Comment_3'),
-                        profileNumber: dr.get('Profile_Number')
+                        profileNumber: dr.get('Profile_Number'),
                         incarcerated: dr.get('Incarcerated')
                     });
                 }
