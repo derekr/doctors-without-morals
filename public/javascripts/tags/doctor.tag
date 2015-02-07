@@ -3,11 +3,13 @@
         <div class="modal-box { 'is-hidden': !showModal }">
             <div class="modal-header" style="background-image: url({ doctor.cover })">
                 <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div>
+                <div class="doctor-info">
+                    <span class="doctor-name">{ doctor.name }</span>
+                </div>
             </div>
 
             <div class="modal-body">
                 <ul>
-                    <li>Name: { doctor.name }</li>
                     <li>Drugs: { doctor.drugs }</li>
                     <li>Rating: { doctor.rating }</li>
                 </ul>
