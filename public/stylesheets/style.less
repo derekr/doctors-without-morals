@@ -1,6 +1,7 @@
 @z1: 100;
 @z2: 200;
 @z3: 300;
+@z4: 400;
 
 html, body {
     margin: 0;
@@ -14,7 +15,8 @@ html, body {
  */
 .splash-view.is-hidden,
 .map-view.is-hidden,
-.doctor-view.is-hidden {
+.doctor-view.is-hidden,
+.tab-bar-view.is-hidden {
     opacity: 0;
     pointer-events: none;
 }
@@ -60,7 +62,7 @@ html, body {
 
 .modal-box {
     position: absolute;
-    z-index: @z3 + 1;
+    z-index: @z4 + 1;
     background: #fff;
     border-radius: 10px;
     max-width: 500px;
@@ -86,7 +88,7 @@ html, body {
     bottom: 0;
     left: 0;
     background: rgba(0,0,0,0.2);
-    z-index: @z3;
+    z-index: @z4;
 }
 
 .modal-header {
@@ -119,4 +121,51 @@ html, body {
 
 .modal-body {
     padding: 20px;
+}
+
+/**
+ * tab-bar.tag
+ */
+.tab-bar-view {
+    position: absolute;
+    z-index: @z3;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2), 0 0 20px rgba(0,0,0,0.1);
+
+    transition: opacity .2s ease-in-out .3s,
+                transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275) .3s;
+}
+
+.tab-bar-view.is-hidden {
+    transform: translate3d(0, 30px, 0);
+}
+
+.tab-nav {
+    font-size: 32px;
+}
+
+.tab-nav div {
+    width: 83.7px;
+    float: left;
+    text-align: center;
+    padding: 10px 0;
+
+    &:hover {
+        background: #efefef;
+    }
+
+    &:first-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    &:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
 }
