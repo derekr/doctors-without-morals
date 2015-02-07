@@ -17,6 +17,11 @@
     riotControl.on('doctorsListChanged', function (doctors) {
         self.isHidden = false;
         self.doctors = doctors;
+        // LIST ALL DOCTOR IDS
+        // console.log(doctors.reduce(function (memo, doctor) {
+        //     memo.push(doctor.profileNumber);
+        //     return memo;
+        // }, []));
         self.update();
     });
 
@@ -39,7 +44,17 @@
 
         self.map.eachLayer(function (layer) {
             layer.on('click', function (e) {
-                riotControl.trigger('doctorInit', self.doctors[1]);
+                e.layer.closePopup();
+
+                var id = e.layer.feature.properties.title;
+
+                var doctor = self.doctors.filter(function (d) {
+                    return d.profileNumber === id;
+                })[0];
+
+                if (typeof doctor === 'undefined') return;
+
+                riotControl.trigger('doctorInit', doctor);
             });
         })
     });

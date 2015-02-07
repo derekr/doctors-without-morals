@@ -16,10 +16,8 @@ function Doctors () {
         var query = new Parse.Query(Doctor);
         query.find({
             success: function(results) {
-                console.log('loaded doctors');
                 for (var i = 0; i < results.length; i++) {
                     var dr = results[i];
-                    console.log(dr.id + ' - ' + dr.get('name'));
                     self.doctors.push({
                         objectId: dr.get('objectId'),
                         name: dr.get('name'),
