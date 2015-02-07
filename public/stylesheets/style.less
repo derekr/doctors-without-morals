@@ -117,10 +117,40 @@ html, body {
     border: 1px solid #e4cf3a;
     padding: 15px;
     border-radius: 2px;
+    color: #a18700;
+    font-size: 16px;
 }
 
 .modal-body {
     padding: 20px;
+}
+
+.booking-btn {
+    border: 1px solid #6cb830;
+    border-radius: 4px;
+    background: transparent;
+    color: green;
+    font-size: 20px;
+    padding: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: 88%; // hack to make it appear full with.
+    display: inline-block;
+    box-sizing: border-box;
+    color: #6cb830;
+    transition: color .2s ease-in-out,
+                background-color .2s ease-in-out;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.btn-success {
+        background-color: #6cb830;
+        color: #fff;
+    }
 }
 
 /**
