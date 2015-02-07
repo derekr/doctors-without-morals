@@ -1,7 +1,21 @@
 <dwm-doctor>
     <div class="doctor-view { 'is-hidden': isHidden }">
         <div class="modal-box { 'is-hidden': !showModal }">
-            { doctor.name }
+            <div class="modal-header" style="background-image: url({ doctor.cover })">
+                <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div>
+            </div>
+
+            <div class="modal-body">
+                <ul>
+                    <li>Name: { doctor.name }</li>
+                    <li>Drugs: { doctor.drugs }</li>
+                    <li>Rating: { doctor.rating }</li>
+                </ul>
+
+                <div class="modal-highlight">
+                    { doctor.instructions }
+                </div>
+            </div>
         </div>
         <div class="modal-overlay" onclick={ dismiss }></div>
     </div>
