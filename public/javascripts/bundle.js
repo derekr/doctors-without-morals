@@ -742,16 +742,45 @@ var riot = require('riot');
 var riotControl = require('./lib/riot-control');
 
 var doctorsList = require('./stores/doctors')();
+var doctor = require('./stores/doctor')();
 
 riotControl.addStore(doctorsList);
+riotControl.addStore(doctor);
 
 require('./tags/app.tag');
 require('./tags/splash.tag');
 require('./tags/map.tag');
+require('./tags/doctor.tag');
 
 riot.mount('dwm-app');
 
-},{"./lib/riot-control":2,"./stores/doctors":4,"./tags/app.tag":5,"./tags/map.tag":6,"./tags/splash.tag":7,"riot":1}],4:[function(require,module,exports){
+},{"./lib/riot-control":2,"./stores/doctor":4,"./stores/doctors":5,"./tags/app.tag":6,"./tags/doctor.tag":7,"./tags/map.tag":8,"./tags/splash.tag":9,"riot":1}],4:[function(require,module,exports){
+var riot = require('riot');
+
+module.exports = Doctor;
+
+function Doctor () {
+    if (!(this instanceof Doctor)) return new Doctor();
+
+    riot.observable(this);
+
+    var self = this;
+
+    self.doctor = null;
+
+    self.on('doctorInit', function (id) {
+        self.doctor = { name: 'doc1' };
+        console.log('init doctor');
+        self.trigger('doctorChanged', self.doctor);
+    });
+
+    self.on('doctorDismiss', function () {
+        self.doctor = null;
+        self.trigger('doctorChanged', self.doctor);
+    });
+};
+
+},{"riot":1}],5:[function(require,module,exports){
 var riot = require('riot');
 
 module.exports = Doctors;
@@ -770,9 +799,9 @@ function Doctors () {
     });
 };
 
-},{"riot":1}],5:[function(require,module,exports){
+},{"riot":1}],6:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map>', function(opts) {
+riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-doctor></dwm-doctor>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
@@ -788,12 +817,55 @@ riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map>', function(op
 
 });
 
-},{"../lib/riot-control":2,"riot":1}],6:[function(require,module,exports){
+},{"../lib/riot-control":2,"riot":1}],7:[function(require,module,exports){
+var riot = require('riot');
+riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> { doctor.name } </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
+
+    var riotControl = require('../lib/riot-control');
+
+    var self = this;
+
+    self.isHidden = true;
+    self.showModal = false;
+    self.doctor = {};
+
+    riotControl.on('doctorChanged', function (doctor) {
+        console.log('doctor changed');
+        if (doctor === null) {
+            self.showModal = false;
+            self.update();
+
+            setTimeout(function () {
+                self.isHidden = true;
+                self.doctor = {};
+                self.update();
+            }, 80);
+
+            return;
+        }
+
+        self.isHidden = false;
+        self.doctor = doctor;
+        self.update();
+        setTimeout(function () {
+            self.showModal = true;
+            self.update();
+        }, 20);
+    });
+
+    this.dismiss = function(e) {
+        riotControl.trigger('doctorDismiss');
+    }.bind(this);
+
+});
+
+},{"../lib/riot-control":2,"riot":1}],8:[function(require,module,exports){
 var riot = require('riot');
 riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id="map-container"></div> </div>', function(opts) {
 
     var MAPBOX_ID = 'drkchd7.l5afb5b5';
     var MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZHJrY2hkNyIsImEiOiJReEVFQjhZIn0.sEf0nefefS_fxgRl8VfmWw';
+
     var riotControl = require('../lib/riot-control');
 
     var self = this;
@@ -820,11 +892,17 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
         geocode.query('San Francisco, CA', function (err, result) {
             self.map.setView([result.latlng[0], result.latlng[1]], 12);
         });
+
+        self.map.eachLayer(function (layer) {
+            layer.on('click', function () {
+                riotControl.trigger('doctorInit', {});
+            });
+        })
     });
 
 });
 
-},{"../lib/riot-control":2,"riot":1}],7:[function(require,module,exports){
+},{"../lib/riot-control":2,"riot":1}],9:[function(require,module,exports){
 var riot = require('riot');
 riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h1>Doctors Without Morals</h1> <p> this will stay up for 2 seconds and then the map view will load. </p> </div>', function(opts) {
 

@@ -1,6 +1,7 @@
 <dwm-app>
     <dwm-splash></dwm-splash>
     <dwm-map></dwm-map>
+    <dwm-doctor></dwm-doctor>
 
     var riotControl = require('../lib/riot-control');
 
