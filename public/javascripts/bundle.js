@@ -769,7 +769,14 @@ function Doctor () {
     self.doctor = null;
 
     self.on('doctorInit', function (id) {
-        self.doctor = { name: 'doc1' };
+        self.doctor = {
+            name: 'Leo Spaceman',
+            rating: 3,
+            drugs: 'weed, vicodin',
+            instructions: 'Tell Dr Spaceman you have a constant pressure behind your right eye.',
+            avatar: 'https://pbs.twimg.com/profile_images/1008791271/leospaceman_400x400.jpg',
+            cover: 'http://distancecities.com/wp-content/uploads/2014/11/new_york_hop.jpg'
+        };
         console.log('init doctor');
         self.trigger('doctorChanged', self.doctor);
     });
@@ -819,7 +826,7 @@ riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-doctor><
 
 },{"../lib/riot-control":2,"riot":1}],7:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> { doctor.name } </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
+riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> <div class="modal-header" style="background-image: url({ doctor.cover })"> <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div> </div> <div class="modal-body"> <ul> <li>Name: { doctor.name }</li> <li>Drugs: { doctor.drugs }</li> <li>Rating: { doctor.rating }</li> </ul> <div class="modal-highlight"> { doctor.instructions } </div> </div> </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
