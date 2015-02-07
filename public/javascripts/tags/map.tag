@@ -5,6 +5,7 @@
 
     var MAPBOX_ID = 'drkchd7.l5afb5b5';
     var MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZHJrY2hkNyIsImEiOiJReEVFQjhZIn0.sEf0nefefS_fxgRl8VfmWw';
+
     var riotControl = require('../lib/riot-control');
 
     var self = this;
@@ -31,5 +32,11 @@
         geocode.query('San Francisco, CA', function (err, result) {
             self.map.setView([result.latlng[0], result.latlng[1]], 12);
         });
+
+        self.map.eachLayer(function (layer) {
+            layer.on('click', function () {
+                riotControl.trigger('doctorInit', {});
+            });
+        })
     });
 </dwm-map>
