@@ -17,6 +17,11 @@
                 <div class="modal-highlight">
                     { doctor.instructions }
                 </div>
+
+                <div class="doctor-reviews">
+                    <p if={doctor.comment1}>{ doctor.comment1 }</p>
+                    <p if={doctor.comment2}>{ doctor.comment2 }</p>
+                </div>
             </div>
 
             <button class="booking-btn { 'btn-success': isBooked }" onclick={ book }>

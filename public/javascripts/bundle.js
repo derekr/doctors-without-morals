@@ -873,7 +873,7 @@ riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-tab-bar>
 
 },{"../lib/riot-control":2,"riot":1}],8:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> <div class="modal-header" style="background-image: url({ doctor.cover })"> <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div> <div class="doctor-info"> <span class="doctor-name">{ doctor.name }</span> </div> </div> <div class="modal-body"> <ul> <li>Drugs: { doctor.drugs }</li> <li>Rating: { doctor.rating }</li> </ul> <div class="modal-highlight"> { doctor.instructions } </div> </div> <button class="booking-btn { \'btn-success\': isBooked }" onclick="{ book }"> <span if="{ !isBooked }"> { typeof doctor.incarcerated !== \'undefined\' ? \'Donate to Legal Fund\' : \'Book Appointment\' } </span> <span if="{ isBooked }"> Chilllll! 👍 </span> </button> </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
+riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> <div class="modal-header" style="background-image: url({ doctor.cover })"> <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div> <div class="doctor-info"> <span class="doctor-name">{ doctor.name }</span> </div> </div> <div class="modal-body"> <ul> <li>Drugs: { doctor.drugs }</li> <li>Rating: { doctor.rating }</li> </ul> <div class="modal-highlight"> { doctor.instructions } </div> <div class="doctor-reviews"> <p if="{doctor.comment1}">{ doctor.comment1 }</p> <p if="{doctor.comment2}">{ doctor.comment2 }</p> </div> </div> <button class="booking-btn { \'btn-success\': isBooked }" onclick="{ book }"> <span if="{ !isBooked }"> { typeof doctor.incarcerated !== \'undefined\' ? \'Donate to Legal Fund\' : \'Book Appointment\' } </span> <span if="{ isBooked }"> Chilllll! 👍 </span> </button> </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
@@ -973,9 +973,6 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
                     return d.profileNumber === id;
                 })[0];
 
-                console.log(doctor);
-                doctor.incarcerated = true;
-
                 if (typeof doctor === 'undefined') return;
 
                 riotControl.trigger('doctorInit', doctor);
@@ -1005,7 +1002,7 @@ riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h
 
 },{"../lib/riot-control":2,"riot":1}],11:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-tab-bar', '<div class="tab-bar-view { \'is-hidden\': isHidden }"> <div class="tab-nav"> <div data-filter="herb" onclick="{ tab }"> 🌿 </div> <div data-filter="pills" onclick="{ tab }"> 💊 </div> <div data-filter="lucky" onclick="{ tab }"> 🚀 </div> <div data-filter="desperate" onclick="{ tab }"> 🔪 </div> </div> </div>', function(opts) {
+riot.tag('dwm-tab-bar', '<div class="tab-bar-view { \'is-hidden\': isHidden }"> <div class="tab-nav"> <div data-filter="herb" onclick="{ tab }"> 🌿 </div> <div data-filter="pills" onclick="{ tab }"> 💊 </div> <div data-filter="yikes" onclick="{ tab }"> 💉 </div> <div data-filter="lucky" onclick="{ tab }"> 🚀 </div> <div data-filter="desperate" onclick="{ tab }"> 🔪 </div> </div> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
