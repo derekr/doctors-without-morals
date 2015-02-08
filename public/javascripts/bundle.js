@@ -873,7 +873,7 @@ riot.tag('dwm-app', '<dwm-splash></dwm-splash> <dwm-map></dwm-map> <dwm-tab-bar>
 
 },{"../lib/riot-control":2,"riot":1}],8:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> <div class="modal-header" style="background-image: url({ doctor.cover })"> <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div> <div class="doctor-info"> <span class="doctor-name">{ doctor.name }</span> </div> </div> <div class="modal-body"> <ul> <li>Drugs: { doctor.drugs }</li> <li>Rating: { doctor.rating }</li> </ul> <div class="modal-highlight"> { doctor.instructions } </div> </div> <button class="booking-btn { \'btn-success\': isBooked }" onclick="{ book }"> <span if="{ !isBooked }"> { doctor.incarcirated ? \'Donate to Legal Fund\' : \'Book Appointment\' } </span> <span if="{ isBooked }"> Chilllll! 👍 </span> </button> </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
+riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <div class="modal-box { \'is-hidden\': !showModal }"> <div class="modal-header" style="background-image: url({ doctor.cover })"> <div class="modal-avatar" style="background-image: url({ doctor.avatar })"></div> <div class="doctor-info"> <span class="doctor-name">{ doctor.name }</span> </div> </div> <div class="modal-body"> <ul> <li>Drugs: { doctor.drugs }</li> <li>Rating: { doctor.rating }</li> </ul> <div class="modal-highlight"> { doctor.instructions } </div> </div> <button class="booking-btn { \'btn-success\': isBooked }" onclick="{ book }"> <span if="{ !isBooked }"> { typeof doctor.incarcerated !== \'undefined\' ? \'Donate to Legal Fund\' : \'Book Appointment\' } </span> <span if="{ isBooked }"> Chilllll! 👍 </span> </button> </div> <div class="modal-overlay" onclick="{ dismiss }"></div> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
@@ -972,6 +972,9 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
                 var doctor = self.doctors.filter(function (d) {
                     return d.profileNumber === id;
                 })[0];
+
+                console.log(doctor);
+                doctor.incarcerated = true;
 
                 if (typeof doctor === 'undefined') return;
 

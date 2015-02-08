@@ -21,7 +21,11 @@
 
             <button class="booking-btn { 'btn-success': isBooked }" onclick={ book }>
                 <span if={ !isBooked }>
-                    { doctor.incarcirated ? 'Donate to Legal Fund' : 'Book Appointment' }
+                    {
+                        typeof doctor.incarcerated !== 'undefined' ?
+                            'Donate to Legal Fund' :
+                            'Book Appointment'
+                    }
                 </span>
                 <span if={ isBooked }>
                     Chilllll! 👍
