@@ -31,7 +31,9 @@
     });
 
     tab (e) {
-        var target = e.target;
-        riotControl.trigger('filterMap', target.dataset.filter);
+        var filter = e.target.dataset.filter;
+        riotControl.trigger('filterMap', filter);
+
+        if (filter === 'desperate') riotControl.trigger('desperateDoctor');
     }
 </dwm-tab-bar>

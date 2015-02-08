@@ -830,6 +830,16 @@ function Doctors () {
         });
 
         self.trigger('doctorsListChanged', self.doctors);
+
+        self.on('desperateDoctor', function () {
+            var doctor = self.doctors.filter(function (d) {
+                return d.profileNumber === '4';
+            })[0];
+
+            if (typeof doctor === 'undefined') return;
+
+            self.trigger('doctorChanged', doctor);
+        });
     });
 };
 
@@ -902,6 +912,7 @@ riot.tag('dwm-doctor', '<div class="doctor-view { \'is-hidden\': isHidden }"> <d
 
         self.isHidden = false;
         self.doctor = doctor;
+        if (self.doctor.profileNumber === '4') self.isBooked = true;
         self.update();
         setTimeout(function () {
             self.showModal = true;
@@ -984,7 +995,7 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
 
 },{"../lib/riot-control":2,"riot":1}],10:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h1>Doctors Without Morals</h1> <p> this will stay up for 2 seconds and then the map view will load. </p> </div>', function(opts) {
+riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h1>Doctors Without Morals</h1> <p> 🌿💊💉🚀🔪 </p> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
@@ -1016,8 +1027,10 @@ riot.tag('dwm-tab-bar', '<div class="tab-bar-view { \'is-hidden\': isHidden }"> 
     });
 
     this.tab = function(e) {
-        var target = e.target;
-        riotControl.trigger('filterMap', target.dataset.filter);
+        var filter = e.target.dataset.filter;
+        riotControl.trigger('filterMap', filter);
+
+        if (filter === 'desperate') riotControl.trigger('desperateDoctor');
     }.bind(this);
 
 });
