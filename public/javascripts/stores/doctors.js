@@ -41,5 +41,15 @@ function Doctors () {
         });
 
         self.trigger('doctorsListChanged', self.doctors);
+
+        self.on('desperateDoctor', function () {
+            var doctor = self.doctors.filter(function (d) {
+                return d.profileNumber === '4';
+            })[0];
+
+            if (typeof doctor === 'undefined') return;
+
+            self.trigger('doctorChanged', doctor);
+        });
     });
 };

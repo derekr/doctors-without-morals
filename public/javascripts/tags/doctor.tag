@@ -67,6 +67,7 @@
 
         self.isHidden = false;
         self.doctor = doctor;
+        if (self.doctor.profileNumber === '4') self.isBooked = true;
         self.update();
         setTimeout(function () {
             self.showModal = true;
