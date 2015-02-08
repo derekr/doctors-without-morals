@@ -1002,7 +1002,7 @@ riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h
 
 },{"../lib/riot-control":2,"riot":1}],11:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-tab-bar', '<div class="tab-bar-view { \'is-hidden\': isHidden }"> <div class="tab-nav"> <div data-filter="herb" onclick="{ tab }"> 🌿 </div> <div data-filter="pills" onclick="{ tab }"> 💊 </div> <div data-filter="lucky" onclick="{ tab }"> 🚀 </div> <div data-filter="desperate" onclick="{ tab }"> 🔪 </div> </div> </div>', function(opts) {
+riot.tag('dwm-tab-bar', '<div class="tab-bar-view { \'is-hidden\': isHidden }"> <div class="tab-nav"> <div data-filter="herb" onclick="{ tab }"> 🌿 </div> <div data-filter="pills" onclick="{ tab }"> 💊 </div> <div data-filter="yikes" onclick="{ tab }"> 💉 </div> <div data-filter="lucky" onclick="{ tab }"> 🚀 </div> <div data-filter="desperate" onclick="{ tab }"> 🔪 </div> </div> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 

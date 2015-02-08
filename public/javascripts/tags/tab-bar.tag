@@ -7,6 +7,9 @@
             <div data-filter="pills" onclick={ tab }>
                 💊
             </div>
+            <div data-filter="yikes" onclick={ tab }>
+                💉
+            </div>
             <div data-filter="lucky" onclick={ tab }>
                 🚀
             </div>
