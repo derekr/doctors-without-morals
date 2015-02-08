@@ -3,7 +3,7 @@
         <h1>Doctors Without Morals</h1>
 
         <p>
-            this will stay up for 2 seconds and then the map view will load.
+            🌿💊💉🚀🔪
         </p>
     </div>
 

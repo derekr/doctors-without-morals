@@ -995,7 +995,7 @@ riot.tag('dwm-map', '<div class="map-view { \'is-hidden\': isHidden }"> <div id=
 
 },{"../lib/riot-control":2,"riot":1}],10:[function(require,module,exports){
 var riot = require('riot');
-riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h1>Doctors Without Morals</h1> <p> this will stay up for 2 seconds and then the map view will load. </p> </div>', function(opts) {
+riot.tag('dwm-splash', '<div class="splash-view { \'is-hidden\': isHidden }"> <h1>Doctors Without Morals</h1> <p> 🌿💊💉🚀🔪 </p> </div>', function(opts) {
 
     var riotControl = require('../lib/riot-control');
 
